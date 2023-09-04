@@ -36,7 +36,10 @@ CSRF_TRUSTED_ORIGINS = [
     'https://leadmanager-api.up.railway.app/',
     'http://localhost:3000/'
 ]
-
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'https://leadmanager-8fttm24wx-aneeshni47.vercel.app'
+]
 
 # Application definition
 
@@ -67,7 +70,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'leadmanager_api.middleware.open_access_middleware'
 ]
 
 ROOT_URLCONF = "leadmanager_api.urls"
