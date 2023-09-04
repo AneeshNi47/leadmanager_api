@@ -29,7 +29,8 @@ DEBUG = True
 ALLOWED_HOST = [
     '*',
     'https://leadmanager-api.up.railway.app/',
-    'leadmanager-api.up.railway.app/'
+    'leadmanager-api.up.railway.app',
+    'https://leadmanager-8fttm24wx-aneeshni47.vercel.app'
     ]
 
 CSRF_TRUSTED_ORIGINS = [
