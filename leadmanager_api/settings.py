@@ -28,12 +28,12 @@ DEBUG = True
 
 ALLOWED_HOST = [
     '*',
-    'https://leadmanager-api.up.railway.app',
-    'leadmanager-api.up.railway.app'
+    'https://leadmanager-api.up.railway.app/',
+    'leadmanager-api.up.railway.app/'
     ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://leadmanager-api.up.railway.app',
+    'https://leadmanager-api.up.railway.app/',
     'http://localhost:3000/'
 ]
 
