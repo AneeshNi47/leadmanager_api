@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-fjd)=udlbb^spbbp0e9l+1ow3-l7$0qxtyzml+estelr)#b%mp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOST = [
+ALLOWED_HOSTS = [
     '*',
     'https://leadmanager-api.up.railway.app/',
     'leadmanager-api.up.railway.app',
