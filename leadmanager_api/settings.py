@@ -33,6 +33,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '*',
     'https://leadmanager-api.up.railway.app/',
+    'wss://leadmanager-api.up.railway.app/',
     'leadmanager-api.up.railway.app',
     'https://leadmanager-8fttm24wx-aneeshni47.vercel.app',
     'https://leadmanager-ui.vercel.app/'
