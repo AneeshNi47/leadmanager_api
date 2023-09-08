@@ -33,7 +33,8 @@ ALLOWED_HOSTS = [
     '*',
     'https://leadmanager-api.up.railway.app/',
     'leadmanager-api.up.railway.app',
-    'https://leadmanager-8fttm24wx-aneeshni47.vercel.app'
+    'https://leadmanager-8fttm24wx-aneeshni47.vercel.app',
+    'https://leadmanager-ui.vercel.app/'
     ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -42,7 +43,8 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
-    'https://leadmanager-8fttm24wx-aneeshni47.vercel.app'
+    'https://leadmanager-8fttm24wx-aneeshni47.vercel.app',
+    'https://leadmanager-ui.vercel.app/'
 ]
 
 # Application definition
