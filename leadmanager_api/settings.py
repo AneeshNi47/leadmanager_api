@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 from decouple import Config
+import logging
+logging.basicConfig(level=logging.DEBUG)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -46,6 +48,7 @@ CORS_ALLOWED_ORIGINS = [
 # Application definition
 
 INSTALLED_APPS = [
+    "channels",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -53,7 +56,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "corsheaders",
-    "leads",
+    "leads.apps.LeadsConfig",
     "rest_framework",
     "knox",
     "accounts"
@@ -92,8 +95,19 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "leadmanager_api.wsgi.application"
+# WSGI_APPLICATION = "leadmanager_api.wsgi.application"
 
+
+ASGI_APPLICATION = 'leadmanager_api.routing.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -104,7 +118,6 @@ WSGI_APPLICATION = "leadmanager_api.wsgi.application"
 #         "NAME": BASE_DIR / "db.sqlite3",
 #     }
 # }
-print(os.path.dirname(os.path.abspath(__file__)))
 config = Config(os.path.dirname(os.path.abspath(__file__)))
 
 DATABASES = {

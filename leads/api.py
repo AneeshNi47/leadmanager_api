@@ -9,11 +9,13 @@ class LeadViewSet(viewsets.ModelViewSet):
     ]
     serializer_class = LeadSerializer
     def get_queryset(self):
-        if self.request.user.is_authenticated:
-            return self.request.user.leads.all()
+        if self.request.user.is_superuser:
+            return Lead.objects.all()
         else:
-            # Handle unauthenticated users
-            return Lead.objects.none()  
+            if self.request.user.is_authenticated:
+                return self.request.user.leads.all()
+            else:
+                return Lead.objects.none()  
     
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
