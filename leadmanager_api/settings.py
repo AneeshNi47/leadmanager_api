@@ -13,10 +13,13 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 from decouple import Config
+import logging
+logging.basicConfig(level=logging.DEBUG)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+config = Config(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -30,8 +33,10 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '*',
     'https://leadmanager-api.up.railway.app/',
+    'wss://leadmanager-api.up.railway.app/',
     'leadmanager-api.up.railway.app',
-    'https://leadmanager-8fttm24wx-aneeshni47.vercel.app'
+    'https://leadmanager-8fttm24wx-aneeshni47.vercel.app',
+    'https://leadmanager-ui.vercel.app/'
     ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -40,12 +45,14 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
-    'https://leadmanager-8fttm24wx-aneeshni47.vercel.app'
+    'https://leadmanager-8fttm24wx-aneeshni47.vercel.app',
+    'https://leadmanager-ui.vercel.app/'
 ]
 
 # Application definition
 
 INSTALLED_APPS = [
+    "channels",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -55,6 +62,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "leads",
     "qr_code",
+    "leads.apps.LeadsConfig",
     "rest_framework",
     "knox",
     "accounts"
@@ -93,8 +101,19 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "leadmanager_api.wsgi.application"
+# WSGI_APPLICATION = "leadmanager_api.wsgi.application"
 
+
+ASGI_APPLICATION = 'leadmanager_api.routing.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [(config('REDIS_URL', default='127.0.0.1'), config('REDIS_PORT', default=6379))],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -105,7 +124,6 @@ WSGI_APPLICATION = "leadmanager_api.wsgi.application"
 #         "NAME": BASE_DIR / "db.sqlite3",
 #     }
 # }
-print(os.path.dirname(os.path.abspath(__file__)))
 config = Config(os.path.dirname(os.path.abspath(__file__)))
 
 DATABASES = {

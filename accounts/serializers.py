@@ -1,41 +1,56 @@
+from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from django.contrib.auth.models  import User
 from django.contrib.auth import authenticate
 
-#User Serializer
+# User Serializer
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model= User
-        fields= (
+        model = User
+        fields = (
             "id",
             "username",
-            "email"
+            "email", 'groups', 'is_superuser'
         )
-#Register Serializer
+
+# Register Serializer
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
-        model= User
-        fields= (
+        model = User
+        fields = (
             "id",
             "username",
             "email",
             "password"
         )
-        extra_kwargs={'password':{'write_only':True}}
+        extra_kwargs = {'password': {'write_only': True}}
+
     def create(self, validated_data):
         user = User.objects.create_user(
             validated_data['username'],
             validated_data['email'],
             validated_data['password'],
-            )
+        )
         return user
 
-#Login Serializer
+# Login Serializer
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField()
+
     def validate(self, data):
         user = authenticate(**data)
         if user and user.is_active:
             return user
         raise serializers.ValidationError("Incorrect Credentials")
+
+# Group Serializer
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = '__all__'
+
+# Group User List Serializer
+class GroupUserListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username')
