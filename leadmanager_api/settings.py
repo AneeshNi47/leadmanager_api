@@ -46,7 +46,7 @@ CSRF_TRUSTED_ORIGINS = [
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'https://leadmanager-8fttm24wx-aneeshni47.vercel.app',
-    'https://leadmanager-ui.vercel.app/'
+    'https://leadmanager-ui.vercel.app'
 ]
 
 # Application definition
@@ -62,7 +62,6 @@ INSTALLED_APPS = [
     "corsheaders",
     "leads",
     "qr_code",
-    "leads.apps.LeadsConfig",
     "rest_framework",
     "knox",
     "accounts"
