@@ -32,21 +32,20 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '*',
-    'https://leadmanager-api.up.railway.app/',
-    'wss://leadmanager-api.up.railway.app/',
-    'leadmanager-api.up.railway.app',
     'https://leadmanager-8fttm24wx-aneeshni47.vercel.app',
     'https://leadmanager-ui.vercel.app/'
+    'https://leadmanager-api-639ef0e635a1.herokuapp.com/'
     ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://leadmanager-api.up.railway.app/',
-    'http://localhost:3000/'
+    'http://localhost:3000/',
+    'https://leadmanager-api-639ef0e635a1.herokuapp.com/'
 ]
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'https://leadmanager-8fttm24wx-aneeshni47.vercel.app',
-    'https://leadmanager-ui.vercel.app'
+    'https://leadmanager-ui.vercel.app',
+    'https://leadmanager-api-639ef0e635a1.herokuapp.com'
 ]
 
 # Application definition
