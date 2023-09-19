@@ -7,7 +7,7 @@ def generate_qr_code(type, information, config):
 
     if type == 'string':
         print(f"creating {type}")
-        qr = segno.make(information, version=1)
+        qr = segno.make(information.get("string"), version=1)
     elif type == 'wifi_connect':
         print(f"creating {type}")
         qr = helpers.make_wifi(ssid=information.get('ssid'), password=information.get('password'), security=information.get('security'))
