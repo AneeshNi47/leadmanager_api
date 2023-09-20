@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from django.contrib import admin
+from .models import Lead, LeadStatus
+
+admin.site.register(LeadStatus)
+admin.site.register(Lead)
