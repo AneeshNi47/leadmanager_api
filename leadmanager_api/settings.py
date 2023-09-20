@@ -60,7 +60,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "corsheaders",
-    "leads",
+    "leads.apps.LeadsConfig",
     "qr_code",
     "rest_framework",
     "knox",
