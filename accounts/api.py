@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions, status
+from rest_framework import generics, permissions, status, viewsets
 from rest_framework.response import Response
 from knox.models import AuthToken
 from django.contrib.auth.models import User, Group
@@ -89,3 +89,18 @@ class ListUsersInGroupApi(generics.ListAPIView):
         group_id = self.kwargs['group_id']
         group = Group.objects.get(id=group_id)
         return group.user_set.all()
+
+class NonSuperUsersApi(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = UserSerializer
+
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return User.objects.filter(is_superuser=False)
+        else:
+            return User.objects.none()
+
+    def list(self, request):
+        queryset = self.get_queryset()
+        serializer = UserSerializer(queryset, many=True)
+        return Response(serializer.data)
