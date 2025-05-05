@@ -37,6 +37,7 @@ class LeadViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         try:
+            print("Creating new lead")
             new_lead_status = LeadStatus.objects.get(status_title="New Lead")
         except LeadStatus.DoesNotExist as error:
             raise error.ValidationError("The 'New Lead' status does not exist. Please create it first.")

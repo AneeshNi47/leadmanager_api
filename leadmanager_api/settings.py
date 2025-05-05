@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 from decouple import Config
+import dj_database_url
 import logging
 logging.basicConfig(level=logging.DEBUG)
 
@@ -125,9 +126,13 @@ CHANNEL_LAYERS = {
 #     }
 # }
 config = Config(os.path.dirname(os.path.abspath(__file__)))
+DATABASES = {}
 
-DATABASES = {
-    'default': {
+database_url = os.environ.get("DATABASE_URL")
+if database_url:
+    DATABASES["default"] = dj_database_url.parse(database_url)
+else:
+    DATABASES["default"] = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': config('DB_NAME', default='leadmanager_db'),
         'USER': config('DB_USER', default='admin'),
@@ -135,7 +140,6 @@ DATABASES = {
         'HOST': config('DB_HOST', default='localhost'),
         'PORT': config('DB_PORT', default='5432'),
     }
-}
 
 
 # Password validation
