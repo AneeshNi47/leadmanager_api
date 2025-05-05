@@ -42,23 +42,35 @@ class QRCodeViewSet(viewsets.ModelViewSet):
         return response
 
     def create(self, request, *args, **kwargs):
+        print("creating")
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             instance = serializer.save(owner=self.request.user)
+
+            if not instance.qr_type:
+                return Response({'error': 'QR Code Type is required.'}, status=status.HTTP_400_BAD_REQUEST)
+
             config = {
-                "border" : instance.border,
-                "scale" : instance.scale,
-                "unit" : instance.unit,
-                "dark" : instance.dark,
-                "light" : instance.light,
-                "data_dark" : instance.data_dark,
-                "data_light" : instance.data_light,
+                "border": instance.border,
+                "scale": instance.scale,
+                "unit": instance.unit,
+                "dark": instance.dark,
+                "light": instance.light,
+                "data_dark": instance.data_dark,
+                "data_light": instance.data_light,
             }
-            type = QRCodeType.objects.get(pk=instance.qr_type.id)
-            if instance.information != {} and type:
-                buffer = generate_qr_code(type.type_name,instance.information, config)
+
+            try:
+                qr_type = QRCodeType.objects.get(pk=instance.qr_type.id)
+            except QRCodeType.DoesNotExist:
+                return Response({'error': 'Invalid QR Code Type.'}, status=status.HTTP_400_BAD_REQUEST)
+
+            if instance.information and qr_type:
+                buffer = generate_qr_code(qr_type.type_name, instance.information, config)
                 return self.send_file(buffer, filename=f"{instance.name}.png", content_type="image/png")
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     @action(detail=True, methods=['GET'])

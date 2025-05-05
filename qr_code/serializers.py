@@ -8,5 +8,8 @@ class QRCodeTypeSerializer(serializers.ModelSerializer):
 
 class QRCodeSerializer(serializers.ModelSerializer):
     class Meta:
-        model= QRCode
+        model = QRCode
         fields = '__all__'
+        extra_kwargs = {
+            'qr_type': {'required': True, 'allow_null': False}
+        }
