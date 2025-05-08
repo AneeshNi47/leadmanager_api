@@ -1,4 +1,5 @@
 from .models import Lead, LeadStatus
+from rest_framework.exceptions import ValidationError
 from rest_framework import viewsets, permissions
 from django.contrib.auth.models import User
 from .serializers import LeadSerializer, LeadStatusSerializer
@@ -40,7 +41,7 @@ class LeadViewSet(viewsets.ModelViewSet):
             print("Creating new lead")
             new_lead_status = LeadStatus.objects.get(status_title="New Lead")
         except LeadStatus.DoesNotExist as error:
-            raise error.ValidationError("The 'New Lead' status does not exist. Please create it first.")
+            raise ValidationError("The 'New Lead' status does not exist. Please create it first.")
         
         serializer.save(owner=self.request.user, status=new_lead_status)
 

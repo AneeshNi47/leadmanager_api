@@ -40,7 +40,8 @@ ALLOWED_HOSTS = [
 
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:3000/',
-    'https://leadmanager-api-639ef0e635a1.herokuapp.com'
+    'https://leadmanager-api-639ef0e635a1.herokuapp.com',
+    'https://leadmanager-api.onrender.com'
     
 ]
 CORS_ALLOWED_ORIGINS = [
